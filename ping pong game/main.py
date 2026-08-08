@@ -1,5 +1,4 @@
 from pygame import *
-from random import randint
 
 win_width = 1000
 win_height = 558
@@ -32,7 +31,17 @@ class Player(GameSprite):
         if keys[K_s] and self.rect.y < win_height - self.rect.height:
             self.rect.y += self.speed
 
-batman = Player('bat.png', 5, 424, 4)
+class Player2(GameSprite):
+    def update(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < win_height - self.rect.height:
+            self.rect.y += self.speed
+
+
+batman = Player('bat.png', 30, win_height//2, 4)
+batman2 = Player2('bat.png', win_width-100, win_height//2, 4)
 
 run = True
 while run:
@@ -41,8 +50,11 @@ while run:
             run = False
 
     window.blit(background, (0, 0))   
+
     batman.update()
+    batman2.update()
     batman.reset()
+    batman2.reset()
 
     display.update()
-    clock.tick(FPS)  
+    clock.tick(FPS)
