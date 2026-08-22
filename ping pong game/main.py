@@ -24,7 +24,7 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 class Player(GameSprite):
-    def update(self):
+    def update(self):#what player can do
         keys = key.get_pressed()
         if keys[K_w] and self.rect.y > 0:
             self.rect.y -= self.speed
@@ -32,7 +32,7 @@ class Player(GameSprite):
             self.rect.y += self.speed
 
 class Player2(GameSprite):
-    def update(self):
+    def update(self):# what player2 can do
         keys = key.get_pressed()
         if keys[K_UP] and self.rect.y > 0:
             self.rect.y -= self.speed
@@ -40,21 +40,30 @@ class Player2(GameSprite):
             self.rect.y += self.speed
 
 
-batman = Player('bat.png', 30, win_height//2, 4)
+batman = Player('bat.png', 30, win_height//2, 4) #how the player made
 batman2 = Player2('bat.png', win_width-100, win_height//2, 4)
-
-run = True
+ball = GameSprite('ball.png', 15, 125, 4)
+complete = False#handling win or lose
+speed_x = 3
+speed_y = 3
+run = True# keeps the window appearing
 while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+    if complete != True:
 
-    window.blit(background, (0, 0))   
-
-    batman.update()
-    batman2.update()
-    batman.reset()
-    batman2.reset()
+        window.blit(background, (0, 0))   
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y 
+        if ball.rect.y > win_height - 50 or ball.rect.y < 0:
+            speed_y *= -1 
+    
+        batman.update()
+        batman2.update()
+        batman.reset()
+        batman2.reset()
+        ball.reset()
 
     display.update()
     clock.tick(FPS)
